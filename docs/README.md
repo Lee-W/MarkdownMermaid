@@ -82,13 +82,18 @@ graph TB
 
 ### Use it with [Pelican](https://getpelican.com/)
 
-Add `"markdown_mermaidjs": {}` to `MARKDOWN["extension_configs"]` in your `pelicanconf.py`
+Add `"markdown_mermaidjs": {}` to `MARKDOWN["extension_configs"]` in your `pelicanconf.py`.
+For the default `MARKDOWN` configuration, it will look like the string below:
 
 ```python
 MARKDOWN = {
-    "extension_configs": {
-        "markdown_mermaidjs": {},
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+        "markdown_mermaidjs": {}, # <------ Our addition!
     },
+    'output_format': 'html5',
 }
 ```
 
