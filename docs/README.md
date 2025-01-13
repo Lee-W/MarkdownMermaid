@@ -80,6 +80,43 @@ graph TB
 </script>
 ```
 
+### Adding Custom Icon Packs
+
+Some newer MermaidJS diagram types (most notably [Architecture](https://mermaid.js.org/syntax/architecture.html)),
+support referencing custom icon packs that are registered (i.e. https://mermaid.js.org/config/icons.html).
+
+To register packs, you can add them to the extension config with a structure of ```icon_packs: {"pack_name" : "pack_url" }```, i.e.:
+
+```python
+import markdown
+
+html = markdown.markdown(
+    text,
+    extensions=["markdown-mermaidjs"],
+    extension_configs={
+        "markdown_mermaidjs": {
+            "icon_packs": {
+                "logos": "https://unpkg.com/@iconify-json/logos@1/icons.json",
+                "hugeicons": "https://unpkg.com/@iconify-json/hugeicons@1/icons.json",
+            }
+        }
+    },
+)
+```
+
+The resulting HTML should be nearly identical, but the icon packs should be registered, e.g.:
+
+```html
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.registerIconPacks([
+        { name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) => res.json()) },
+        { name: 'hugeicons', loader: () => fetch('https://unpkg.com/@iconify-json/hugeicons@1/icons.json').then((res) => res.json()) }
+    ]);
+    mermaid.initialize({ startOnLoad: true });
+</script>
+```
+
 ### Use it with [Pelican](https://getpelican.com/)
 
 Add `"markdown_mermaidjs": {}` to `MARKDOWN["extension_configs"]` in your `pelicanconf.py`.
@@ -94,6 +131,23 @@ MARKDOWN = {
         "markdown_mermaidjs": {},  # <------ Our addition!
     },
     "output_format": "html5",
+}
+```
+
+#### Icon Packs via Pelican
+
+Similarly, with the extension config, you can add it in the `pelicanconf.py`.
+
+```python
+MARKDOWN = {
+    "extension_configs": {
+        "markdown_mermaidjs": {
+            "icon_packs": {
+                "logos": "https://unpkg.com/@iconify-json/logos@1/icons.json",
+                "hugeicons": "https://unpkg.com/@iconify-json/hugeicons@1/icons.json",
+            }
+        },
+    },
 }
 ```
 
