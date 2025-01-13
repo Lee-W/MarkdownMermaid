@@ -1,7 +1,10 @@
 [project]
 name = "markdown-mermaidjs"
 version = "1.0.0"
-authors = [{ name = "Wei Lee", email = "weilee.rx@gmail.com" }]
+authors = [
+    { name = "Wei Lee", email = "weilee.rx@gmail.com" },
+    { name = "Owyn Richen", email = "owynrichen@gmail.com" }
+]
 description = "Python-Markdown extension to add Mermaid graph"
 license = "GPL-3.0-only"
 readme = "docs/README.md"
