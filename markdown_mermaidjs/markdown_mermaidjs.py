@@ -23,7 +23,7 @@ class MermaidPreprocessor(Preprocessor):
         icon_packs_calls: list[str] = []
         for name, url in self.icon_packs.items():
             icon_packs_calls.append(
-                f"mermaid.registerIconPacks({{ name: '{name}', loader: () => fetch('{url}').then((res) => res.json()) }});"
+                f"{{ name: '{name}', loader: () => fetch('{url}').then((res) => res.json()) }}"
             )
         return icon_packs_calls
 
@@ -32,7 +32,11 @@ class MermaidPreprocessor(Preprocessor):
 
         calls = self.generate_icon_packs_calls()
         if len(calls) > 0:
-            icon_packs_calls = "\n" + "\n".join(calls)
+            callstr = "\n,".join(calls)
+            icon_packs_calls = f"""
+mermaid.registerIconPacks([
+    {callstr}
+]);"""
 
         script_module = f"""
 <script type="module">

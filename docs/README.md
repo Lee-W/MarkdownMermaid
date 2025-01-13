@@ -109,8 +109,10 @@ The resulting HTML should be nearly identical, but the icon packs should be regi
 ```html
 <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.registerIconPacks({ name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) => res.json()) });
-    mermaid.registerIconPacks({ name: 'hugeicons', loader: () => fetch('https://unpkg.com/@iconify-json/hugeicons@1/icons.json').then((res) => res.json()) });
+    mermaid.registerIconPacks([
+        { name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) => res.json()) },
+        { name: 'hugeicons', loader: () => fetch('https://unpkg.com/@iconify-json/hugeicons@1/icons.json').then((res) => res.json()) }
+    ]);
     mermaid.initialize({ startOnLoad: true });
 </script>
 ```
