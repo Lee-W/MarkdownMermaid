@@ -1,0 +1,14 @@
+"# Title\n\n\n\nTesting 'registerIconPacks' as used by https://mermaid.js.org/syntax/architecture.html.\n\
+  \n\n\n<div class=\"mermaid\">\narchitecture-beta\n\n    group api(logos:aws-lambda)[API]\n\
+  \n\n\n    service db(logos:aws-aurora)[Database] in api\n\n    service disk1(logos:aws-glacier)[Storage]\
+  \ in api\n\n    service disk2(logos:aws-s3)[Storage] in api\n\n    service server(logos:aws-ec2)[Server]\
+  \ in api\n\n\n\n    db:L -- R:server\n\n    disk1:T -- B:server\n\n    disk2:T --\
+  \ B:db\n\n</div>\n\n\nIt only supports full url lazy-loading: https://mermaid.js.org/config/icons.html\n\
+  \n\n\n<div class=\"mermaid\">\narchitecture-beta\n\n    group api(logos:aws-lambda)[API]\n\
+  \n\n\n    service db(logos:aws-aurora)[Database] in api\n\n    service disk1(logos:aws-glacier)[Storage]\
+  \ in api\n\n    service disk2(logos:aws-s3)[Storage] in api\n\n    service server(logos:aws-ec2)[Server]\
+  \ in api\n\n\n\n    db:L -- R:server\n\n    disk1:T -- B:server\n\n    disk2:T --\
+  \ B:db\n\n</div>\n\n\n\n\nEnd of the file\n\n\n<script type=\"module\">\n    import\
+  \ mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';\n\
+  mermaid.registerIconPacks([\n    { name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res)\
+  \ => res.json()) }\n]);\n    mermaid.initialize({ startOnLoad: true });\n</script>\n"
