@@ -37,7 +37,7 @@ repos:
     rev: v0.17.2
     hooks:
     - id: markdownlint-cli2
-      exclude: tests/data/test_1.md
+      exclude: tests/data/.*.md
 
 
   - repo: https://github.com/codespell-project/codespell

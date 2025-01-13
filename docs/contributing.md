@@ -32,6 +32,11 @@ python -m pipx ensurepath
 * [uv](https://github.com/astral-sh/uv/): for dependency management
 * [invoke](https://github.com/pyinvoke/invoke): for task management
 
+#### Notes for Windows Developers
+
+By default, the tasks leverage [pty](https://docs.python.org/3/library/pty.html) under the covers, which
+does not support Windows. Either run this via WSL or pass --no-pty to commands that demand it.
+
 ### Step 6. Create your local Python virtual environment and install dependencies
 
 ```sh
@@ -45,11 +50,23 @@ Note that this project follows [conventional-commit](https://www.conventionalcom
 inv git.commit
 ```
 
+or on Windows (currently throws an error when run outside of cmd.exe):
+
+```sh
+inv git.commit --no-pty
+```
+
 ### Step 8. Run test cases
 Make sure all test cases pass.
 
 ```sh
 inv test
+```
+
+or on Windows:
+
+```sh
+inv test --no-pty
 ```
 
 ### Step 9. Run test coverage
@@ -80,6 +97,12 @@ Ensure the packages installed are secure, and no server vulnerability is introdu
 
 ```sh
 inv secure
+```
+
+or on Windows:
+
+```sh
+inv secure --no-pty
 ```
 
 ### Step 13. Create a Pull Request and celebrate 🎉
