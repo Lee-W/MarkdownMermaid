@@ -10,57 +10,95 @@ if TYPE_CHECKING:
     from markdown import Markdown
 
 
-MERMAID_CODEBLOCK_START = re.compile(r"^(?P<code_block_sign>[\~\`]{3})[Mm]ermaid\s*$")
-MERMAID_JS_SCRIPT = """
+class MermaidPreprocessor(Preprocessor):
+    MERMAID_CODEBLOCK_START = re.compile(
+        r"^(?P<code_block_sign>[\~\`]{3})[Mm]ermaid\s*$"
+    )
+
+    def __init__(self, md: Markdown, icon_packs: dict = {}) -> None:
+        self.icon_packs = icon_packs
+        super().__init__(md)
+
+    def generate_icon_packs_calls(self) -> list[str]:
+        icon_packs_calls: list[str] = []
+        for name, url in self.icon_packs.items():
+            icon_packs_calls.append(
+                f"mermaid.registerIcons({{ name: '{name}', loader: () => fetch('{url}').then((res) => res.json()) }});"
+            )
+        return icon_packs_calls
+
+    def generate_mermaid_init_script(self) -> list[str]:
+        icon_packs_calls = ""
+
+        calls = self.generate_icon_packs_calls()
+        if len(calls) > 0:
+            icon_packs_calls = "\n" + "\n".join(calls)
+
+        script_module = f"""
 <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true });
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';{icon_packs_calls}
+    mermaid.initialize({{ startOnLoad: true }});
 </script>
 """
 
+        return script_module.split("\n")
 
-def add_mermaid_script_and_tag(lines: list[str]) -> list[str]:
-    result_lines: list[str] = []
-    in_mermaid_codeblock: bool = False
-    exist_mermaid_codeblock: bool = False
+    def add_mermaid_script_and_tag(self, lines: list[str]) -> list[str]:
+        result_lines: list[str] = []
+        in_mermaid_codeblock: bool = False
+        exist_mermaid_codeblock: bool = False
 
-    codeblock_end_pattern = re.compile("```")
-    for line in lines:
-        if in_mermaid_codeblock:
-            match_codeblock_end = codeblock_end_pattern.match(line)
-            if match_codeblock_end:
-                in_mermaid_codeblock = False
-                result_lines.append("</div>")
+        codeblock_end_pattern = re.compile("```")
+        for line in lines:
+            if in_mermaid_codeblock:
+                match_codeblock_end = codeblock_end_pattern.match(line)
+                if match_codeblock_end:
+                    in_mermaid_codeblock = False
+                    result_lines.append("</div>")
+                    continue
+
+            match_mermaid_codeblock_start = self.MERMAID_CODEBLOCK_START.match(line)
+            if match_mermaid_codeblock_start:
+                exist_mermaid_codeblock = True
+                in_mermaid_codeblock = True
+                codeblock_sign = match_mermaid_codeblock_start.group("code_block_sign")
+                codeblock_end_pattern = re.compile(rf"{codeblock_sign}\s*")
+                result_lines.append('<div class="mermaid">')
                 continue
 
-        match_mermaid_codeblock_start = MERMAID_CODEBLOCK_START.match(line)
-        if match_mermaid_codeblock_start:
-            exist_mermaid_codeblock = True
-            in_mermaid_codeblock = True
-            codeblock_sign = match_mermaid_codeblock_start.group("code_block_sign")
-            codeblock_end_pattern = re.compile(rf"{codeblock_sign}\s*")
-            result_lines.append('<div class="mermaid">')
-            continue
+            result_lines.append(line)
 
-        result_lines.append(line)
+        if exist_mermaid_codeblock:
+            result_lines.extend(self.generate_mermaid_init_script())
+        return result_lines
 
-    if exist_mermaid_codeblock:
-        result_lines.extend(MERMAID_JS_SCRIPT.split("\n"))
-    return result_lines
-
-
-class MermaidPreprocessor(Preprocessor):
     def run(self, lines: list[str]) -> list[str]:
-        return add_mermaid_script_and_tag(lines)
+        return self.add_mermaid_script_and_tag(lines)
 
 
 class MermaidExtension(Extension):
-    """Add source code highlighting to markdown codeblocks."""
+    def __init__(self, **kwargs: dict[str, Any]) -> None:
+        self.config = {
+            "icon_packs": [
+                {},
+                "Dictionary of icon packs to use: { name(str) : url(str) }.  Default: {} (no icon packs). example: { 'logos' : 'https://unpkg.com/@iconify-json/logos@1/icons.json' } corresponds to the json file example here: https://mermaid.js.org/config/icons.html",
+            ],
+        }
+
+        super().__init__(**kwargs)
+
+        self.icon_packs: dict[str, str] = {}
+        self.icon_packs.update(self.getConfig("icon_packs", default={}))
+
+    """Add mermaid diagram markdown codeblocks."""
 
     def extendMarkdown(self, md: Markdown) -> None:
-        """Add HilitePostprocessor to Markdown instance."""
+        """Add MermaidExtension to Markdown instance."""
         # Insert a preprocessor before ReferencePreprocessor
-        md.preprocessors.register(MermaidPreprocessor(md), "mermaid", 35)
+
+        md.preprocessors.register(
+            MermaidPreprocessor(md, icon_packs=self.icon_packs), "mermaid", 35
+        )
         md.registerExtension(self)
 
 
