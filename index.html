@@ -566,11 +566,16 @@ graph TB
 &lt;/script&gt;
 </code></pre>
 <h3 id="use-it-with-pelican">Use it with <a href="https://getpelican.com/">Pelican</a></h3>
-<p>Add <code>"markdown_mermaidjs": {}</code> to <code>MARKDOWN["extension_configs"]</code> in your <code>pelicanconf.py</code></p>
+<p>Add <code>"markdown_mermaidjs": {}</code> to <code>MARKDOWN["extension_configs"]</code> in your <code>pelicanconf.py</code>.
+For the default <code>MARKDOWN</code> configuration, it will look like the string below:</p>
 <pre><code class="language-python">MARKDOWN = {
-    &quot;extension_configs&quot;: {
-        &quot;markdown_mermaidjs&quot;: {},
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+        &quot;markdown_mermaidjs&quot;: {}, # &lt;------ Our addition!
     },
+    'output_format': 'html5',
 }
 </code></pre>
 <h2 id="contributing">Contributing</h2>
