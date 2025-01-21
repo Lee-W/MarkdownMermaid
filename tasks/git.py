@@ -5,9 +5,9 @@ from tasks.common import VENV_PREFIX
 
 
 @task
-def commit(ctx: Context) -> None:
+def commit(ctx: Context, pty: bool = True) -> None:
     """Commit through commitizen"""
-    ctx.run(f"{VENV_PREFIX} cz commit", pty=True)
+    ctx.run(f"{VENV_PREFIX} cz commit", pty=pty)
 
 
 @task
