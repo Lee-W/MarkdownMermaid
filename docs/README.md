@@ -87,13 +87,13 @@ For the default `MARKDOWN` configuration, it will look like the string below:
 
 ```python
 MARKDOWN = {
-    'extension_configs': {
-        'markdown.extensions.codehilite': {'css_class': 'highlight'},
-        'markdown.extensions.extra': {},
-        'markdown.extensions.meta': {},
-        "markdown_mermaidjs": {}, # <------ Our addition!
+    "extension_configs": {
+        "markdown.extensions.codehilite": {"css_class": "highlight"},
+        "markdown.extensions.extra": {},
+        "markdown.extensions.meta": {},
+        "markdown_mermaidjs": {},  # <------ Our addition!
     },
-    'output_format': 'html5',
+    "output_format": "html5",
 }
 ```
 
@@ -107,4 +107,4 @@ Wei Lee <weilee.rx@gmail.com>
 
 This is a forked project of [oruelle/md_mermaid](https://github.com/oruelle/md_mermaid)
 
-Created from [Lee-W/cookiecutter-python-template](https://github.com/Lee-W/cookiecutter-python-template/tree/1.10.1) version 1.10.1
+Created from [Lee-W/cookiecutter-python-template](https://github.com/Lee-W/cookiecutter-python-template/tree/3.0.0) version 3.0.0
