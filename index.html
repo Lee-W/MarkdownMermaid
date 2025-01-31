@@ -311,11 +311,35 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#adding-custom-icon-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Custom Icon Packs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#use-it-with-pelican" class="md-nav__link">
     <span class="md-ellipsis">
       Use it with Pelican
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Use it with Pelican">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#icon-packs-via-pelican" class="md-nav__link">
+    <span class="md-ellipsis">
+      Icon Packs via Pelican
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -449,11 +473,35 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#adding-custom-icon-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Custom Icon Packs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#use-it-with-pelican" class="md-nav__link">
     <span class="md-ellipsis">
       Use it with Pelican
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Use it with Pelican">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#icon-packs-via-pelican" class="md-nav__link">
+    <span class="md-ellipsis">
+      Icon Packs via Pelican
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -565,6 +613,35 @@ graph TB
     mermaid.initialize({ startOnLoad: true });
 &lt;/script&gt;
 </code></pre>
+<h3 id="adding-custom-icon-packs">Adding Custom Icon Packs</h3>
+<p>Some newer MermaidJS diagram types (most notably <a href="https://mermaid.js.org/syntax/architecture.html">Architecture</a>),
+support referencing custom icon packs that are registered (i.e. https://mermaid.js.org/config/icons.html).</p>
+<p>To register packs, you can add them to the extension config with a structure of <code>icon_packs: {"pack_name" : "pack_url" }</code>, i.e.:</p>
+<pre><code class="language-python">import markdown
+
+html = markdown.markdown(
+    text,
+    extensions=[&quot;markdown-mermaidjs&quot;],
+    extension_configs={
+        &quot;markdown_mermaidjs&quot;: {
+            &quot;icon_packs&quot;: {
+                &quot;logos&quot;: &quot;https://unpkg.com/@iconify-json/logos@1/icons.json&quot;,
+                &quot;hugeicons&quot;: &quot;https://unpkg.com/@iconify-json/hugeicons@1/icons.json&quot;,
+            }
+        }
+    },
+)
+</code></pre>
+<p>The resulting HTML should be nearly identical, but the icon packs should be registered, e.g.:</p>
+<pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.registerIconPacks([
+        { name: 'logos', loader: () =&gt; fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) =&gt; res.json()) },
+        { name: 'hugeicons', loader: () =&gt; fetch('https://unpkg.com/@iconify-json/hugeicons@1/icons.json').then((res) =&gt; res.json()) }
+    ]);
+    mermaid.initialize({ startOnLoad: true });
+&lt;/script&gt;
+</code></pre>
 <h3 id="use-it-with-pelican">Use it with <a href="https://getpelican.com/">Pelican</a></h3>
 <p>Add <code>"markdown_mermaidjs": {}</code> to <code>MARKDOWN["extension_configs"]</code> in your <code>pelicanconf.py</code>.
 For the default <code>MARKDOWN</code> configuration, it will look like the string below:</p>
@@ -576,6 +653,19 @@ For the default <code>MARKDOWN</code> configuration, it will look like the strin
         &quot;markdown_mermaidjs&quot;: {},  # &lt;------ Our addition!
     },
     &quot;output_format&quot;: &quot;html5&quot;,
+}
+</code></pre>
+<h4 id="icon-packs-via-pelican">Icon Packs via Pelican</h4>
+<p>Similarly, with the extension config, you can add it in the <code>pelicanconf.py</code>.</p>
+<pre><code class="language-python">MARKDOWN = {
+    &quot;extension_configs&quot;: {
+        &quot;markdown_mermaidjs&quot;: {
+            &quot;icon_packs&quot;: {
+                &quot;logos&quot;: &quot;https://unpkg.com/@iconify-json/logos@1/icons.json&quot;,
+                &quot;hugeicons&quot;: &quot;https://unpkg.com/@iconify-json/hugeicons@1/icons.json&quot;,
+            }
+        },
+    },
 }
 </code></pre>
 <h2 id="contributing">Contributing</h2>

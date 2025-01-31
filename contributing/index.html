@@ -317,6 +317,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 5. Install prerequisite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes-for-windows-developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notes for Windows Developers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -466,6 +481,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 5. Install prerequisite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes-for-windows-developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notes for Windows Developers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -581,6 +611,9 @@ python -m pipx ensurepath
 <li><a href="https://github.com/astral-sh/uv/">uv</a>: for dependency management</li>
 <li><a href="https://github.com/pyinvoke/invoke">invoke</a>: for task management</li>
 </ul>
+<h4 id="notes-for-windows-developers">Notes for Windows Developers</h4>
+<p>By default, the tasks leverage <a href="https://docs.python.org/3/library/pty.html">pty</a> under the covers, which
+does not support Windows. Either run this via WSL or pass --no-pty to commands that demand it.</p>
 <h3 id="step-6-create-your-local-python-virtual-environment-and-install-dependencies">Step 6. Create your local Python virtual environment and install dependencies</h3>
 <pre><code class="language-sh">inv env.init-dev
 </code></pre>
@@ -588,9 +621,15 @@ python -m pipx ensurepath
 <p>Note that this project follows <a href="https://www.conventionalcommits.org/en/v1.0.0/">conventional-commit</a> and bumps version based on it. Use the following command to commit your changes.</p>
 <pre><code class="language-sh">inv git.commit
 </code></pre>
+<p>or on Windows (currently throws an error when run outside of cmd.exe):</p>
+<pre><code class="language-sh">inv git.commit --no-pty
+</code></pre>
 <h3 id="step-8-run-test-cases">Step 8. Run test cases</h3>
 <p>Make sure all test cases pass.</p>
 <pre><code class="language-sh">inv test
+</code></pre>
+<p>or on Windows:</p>
+<pre><code class="language-sh">inv test --no-pty
 </code></pre>
 <h3 id="step-9-run-test-coverage">Step 9. Run test coverage</h3>
 <p>Check the test coverage and see where you can add test cases.</p>
@@ -607,6 +646,9 @@ python -m pipx ensurepath
 <h3 id="step-12-run-security-check">Step 12. Run security check</h3>
 <p>Ensure the packages installed are secure, and no server vulnerability is introduced</p>
 <pre><code class="language-sh">inv secure
+</code></pre>
+<p>or on Windows:</p>
+<pre><code class="language-sh">inv secure --no-pty
 </code></pre>
 <h3 id="step-13-create-a-pull-request-and-celebrate">Step 13. Create a Pull Request and celebrate 🎉</h3>
 
