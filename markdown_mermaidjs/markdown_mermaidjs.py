@@ -61,7 +61,7 @@ mermaid.registerIconPacks([
                 match_codeblock_end = codeblock_end_pattern.match(line)
                 if match_codeblock_end:
                     in_mermaid_codeblock = False
-                    result_lines.append("</div>")
+                    result_lines.append("</pre>")
                     continue
 
             match_mermaid_codeblock_start = self.MERMAID_CODEBLOCK_START.match(line)
@@ -70,7 +70,7 @@ mermaid.registerIconPacks([
                 in_mermaid_codeblock = True
                 codeblock_sign = match_mermaid_codeblock_start.group("code_block_sign")
                 codeblock_end_pattern = re.compile(rf"{codeblock_sign}\s*")
-                result_lines.append('<div class="mermaid">')
+                result_lines.append('<pre class="mermaid">')
                 continue
 
             result_lines.append(line)

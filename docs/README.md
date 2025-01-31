@@ -61,18 +61,18 @@ Expected output
 ```html
 <h1>Title</h1>
 <p>Some text.</p>
-<div class="mermaid">
+<pre class="mermaid">
 graph TB
     A --> B
     B --> C
-</div>
+</pre>
 
 <p>Some other text.</p>
-<div class="mermaid">
+<pre class="mermaid">
 graph TB
     D --> E
     E --> F
-</div>
+</pre>
 
 <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';

@@ -1,5 +1,5 @@
-"# Title\n\n\n\nSome text.\n\n\n\n<div class=\"mermaid\">\ngraph TB\n\n    A --> B\n\
-  \n    B --> C\n\n</div>\n\n\nSome other text.\n\n\n\n<div class=\"mermaid\">\ngraph\
-  \ TB\n\n    D --> E\n\n    E --> F\n\n</div>\n\n\n\n\nEnd of the file\n\n\n<script\
+"# Title\n\n\n\nSome text.\n\n\n\n<pre class=\"mermaid\">\ngraph TB\n\n    A --> B\n\
+  \n    B --> C\n\n</pre>\n\n\nSome other text.\n\n\n\n<pre class=\"mermaid\">\ngraph\
+  \ TB\n\n    D --> E\n\n    E --> F\n\n</pre>\n\n\n\n\nEnd of the file\n\n\n<script\
   \ type=\"module\">\n    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';\n\
   \    mermaid.initialize({ startOnLoad: true });\n</script>\n"
