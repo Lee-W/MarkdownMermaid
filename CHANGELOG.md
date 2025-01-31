@@ -1,3 +1,9 @@
+## 2.0.0 (2025-01-31)
+
+### Feat
+
+- **markdown_mermaid.js**: generate <pre class="mermaid"></pre> instead of <div class="mermaid"></div>
+
 ## 1.1.0 (2025-01-31)
 
 ### Feat
