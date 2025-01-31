@@ -11,7 +11,7 @@
             "github_url": "https://github.com/Lee-W/markdown-mermaidjs",
             "author_name": "Wei Lee",
             "author_email": "weilee.rx@gmail.com",
-            "python_version": "3.8",
+            "python_version": "3.9",
             "dependency_management_tool": "poetry",
             "default_branch": "main",
             "use_strict_mypy_config": "y",
