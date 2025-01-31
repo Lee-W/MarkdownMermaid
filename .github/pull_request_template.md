@@ -13,7 +13,8 @@
 ## Description
 <!--Describe what the change is**-->
 
-## Checklist:
+## Checklist
+
 - [ ] Add test cases to all the changes you introduce
 - [ ] Run `inv style` locally to ensure all linter checks pass
 - [ ] Run `inv test` locally to ensure all test cases pass
