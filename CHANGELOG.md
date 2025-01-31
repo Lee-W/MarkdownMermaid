@@ -1,3 +1,9 @@
+## 1.1.0 (2025-01-31)
+
+### Feat
+
+- **markdown_mermaidjs**: adds the ability to register icon packs with mermaid via extension configuration
+
 ## 1.0.0 (2024-08-25)
 
 ### Feat
